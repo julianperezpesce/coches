@@ -6,6 +6,8 @@ function auth(req, res, next){
 
     try {
         const payload = jwt.verify(jwtToken, 'password');
+        req.user = payload;
+        next();
     } catch (error) {
         res.status(400).send('Acceso denegado. Token no válido')
     }
