@@ -23,3 +23,5 @@ router.post('/',[
 
     res.send('Usuario y contraseña correcta')
 })
+
+module.exports = router
