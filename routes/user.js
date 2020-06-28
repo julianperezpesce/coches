@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const express = require('express');
 const User = require('../models/user')
@@ -27,6 +28,9 @@ router.post('/',[
 
     let user = await User.findOne({email: req.body.email})
     if(user) return res.status(400).send('El usuario ya existe')
+
+    const salt = await bcrypt.genSalt(10)
+    const hashPassword = await bcrypt.hash(req.body.password, salt)
 
     user = new User({
         name: req.body.name,
