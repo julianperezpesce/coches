@@ -1,12 +1,12 @@
-const bcrypt = require('bcrypt')
-const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const express = require('express');
-const User = require('../models/user')
+const User = require('../models/user');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
-router.post('/',[
-    check('name').isLength({min: 3}),
+router.post('/',[    
     check('email').isLength({min: 3}),
     check('password').isLength({min: 3}),
 ], async(req, res)=>{     
@@ -15,13 +15,15 @@ router.post('/',[
         return res.status(422).json({ errors: errors.array() });
     }
 
-    let user = await User.findOne({email: req.body.email})
-    if(!user) return res.status(400).send('Usuario o contraseña incorrecta')
+    let user = await User.findOne({email: req.body.email});
+    if(!user) return res.status(400).send('Usuario o contraseña incorrecta');
 
     const validPassword = await bcrypt.compare(req.body.password, user.password)
     if(!validPassword) return res.status(400).send('Usuario o contraseña incorrecta')
 
-    res.send('Usuario y contraseña correcta')
+    const jwtToken = jwt.sign({_id: user._id, name: user.name}, 'password');
+
+    res.send(jwtToken);
 })
 
 module.exports = router
