@@ -11,6 +11,6 @@ function auth(req, res, next){
     } catch (error) {
         res.status(400).send('Acceso denegado. Token no válido')
     }
-
-
 }
+
+exports.module = auth
