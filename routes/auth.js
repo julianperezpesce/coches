@@ -15,5 +15,11 @@ router.post('/',[
         return res.status(422).json({ errors: errors.array() });
     }
 
-    
+    let user = await User.findOne({email: req.body.email})
+    if(!user) return res.status(400).send('Usuario o contraseña incorrecta')
+
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
+    if(!validPassword) return res.status(400).send('Usuario o contraseña incorrecta')
+
+    res.send('Usuario y contraseña correcta')
 })
