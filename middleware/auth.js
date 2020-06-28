@@ -13,4 +13,4 @@ function auth(req, res, next){
     }
 }
 
-exports.module = auth
+exports.module = auth;
