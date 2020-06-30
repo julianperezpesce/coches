@@ -1,4 +1,5 @@
 const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 const express = require('express');
 const Sale = require('../models/sale')
 const Car = require('../models/car')
