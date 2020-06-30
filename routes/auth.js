@@ -5,6 +5,7 @@ const User = require('../models/user');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
+
 router.post('/',[    
     check('email').isLength({min: 3}),
     check('password').isLength({min: 3}),
@@ -29,4 +30,4 @@ router.post('/',[
     });
 })
 
-module.exports = router
+module.exports = router;
