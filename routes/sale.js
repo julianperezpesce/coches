@@ -7,7 +7,7 @@ const User = require('../models/user')
 const router = express.Router();
 const mongoose = require('mongoose')
 
-router.get('/', async(req, res)=>{
+router.get('/', [auth, admin], async(req, res)=>{
     const sales = await Sale.find()
     res.send(sales)
 })
